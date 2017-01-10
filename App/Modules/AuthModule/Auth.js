@@ -26,7 +26,6 @@ const OrderDetialSchema = {
     comment:'string',
     created:'string',
     dlexp:'string',
-    oid:'string',
     rid:'string',
     status:'string',
     total:'string'
