@@ -1,0 +1,11 @@
+{
+  "name": "authmodule",
+  "version": "0.0.1",
+  "description": "an auth module for chanmao project",
+  "main": "auth.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aiden",
+  "license": "MIT"
+}

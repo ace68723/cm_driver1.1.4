@@ -1,0 +1,8 @@
+
+
+target 'cm_driver' do
+
+    pod "MDWamp", '2.2.1'
+    
+end
+
