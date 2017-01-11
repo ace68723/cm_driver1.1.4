@@ -18,6 +18,14 @@ class TaskCard extends Component {
     constructor() {
       super()
     }
+    shouldComponentUpdate(nextProps, nextState){
+      if(this.props.status != nextProps.status){
+        return true
+      }else{
+        return false
+      }
+
+    }
     _renderTask(){
       if(this.props.status == 10 ||this.props.status == 20 ){
         return this._renderPickup()
@@ -41,7 +49,7 @@ class TaskCard extends Component {
     _renderPickup(){
       return(
         <View style={{width:width*0.965,
-                      minHeight:height*0.264,
+                      minHeight:width*0.965*0.5,
                       backgroundColor:'#ffffff',
                       marginTop:height*0.0135,
                       alignSelf:'center',
@@ -135,7 +143,7 @@ class TaskCard extends Component {
     _renderDelivering(){
       return(
         <View style={{width:width*0.965,
-                      minHeight:height*0.264,
+                      minHeight:width*0.965*0.5,
                       backgroundColor:'#ffffff',
                       marginTop:height*0.0135,
                       alignSelf:'center',
@@ -237,7 +245,7 @@ class TaskCard extends Component {
     _renderFinish(){
       return(
         <View style={{width:width*0.965,
-                      minHeight:height*0.18,
+                      minHeight:width*0.965*0.3,
                       backgroundColor:'#ffffff',
                       marginTop:height*0.0135,
                       alignSelf:'center',
@@ -403,7 +411,7 @@ class TaskCard extends Component {
       )
     }
     render() {
-
+      console.log('render card')
       return (
         <View>
           {this._renderTask()}
