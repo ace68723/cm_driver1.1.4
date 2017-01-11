@@ -299,6 +299,15 @@ class Login extends Component {
                 <View ref={SUBMIT_BUTTON}style={{marginTop:15}}>
                   <FirstButton   handleSubmit = {this._handleSubmit}/>
                 </View>
+                <View style={{position:'absolute',bottom:5,width:width,alignItems:'center'}}>
+                  <Text allowFontScaling={false} style={{marginBottom:5}}>
+                    v1.1.2
+                  </Text>
+                  <Text allowFontScaling={false} style={{fontSize:11}}>
+                    Chanmao Inc. All Copyrights Reserved
+                  </Text>
+                </View>
+
                 <Animated.View style={{position:'absolute',
                                        left:this.state.lineLeft,
                                        top:this.state.lineTop,
