@@ -73,6 +73,7 @@ class Home extends Component {
       this._closeMap = this._closeMap.bind(this);
       this._jumpToMap = this._jumpToMap.bind(this);
       this._cancelNotification = this._cancelNotification.bind(this);
+      this._showOfflineBtn = this._showOfflineBtn.bind(this);
     }
     componentWillMount() {
       Location.requestAlwaysAuthorization()
@@ -268,6 +269,11 @@ class Home extends Component {
         setOnlineFalse()
       }, 500);
 
+    }
+    _showOfflineBtn(){
+      this.setState({
+        showOfflineBtn:!this.state.showOfflineBtn,
+      })
     }
 
     _orderChange(oid,change,status){
@@ -524,6 +530,7 @@ class Home extends Component {
                           orderChange = {this._orderChange}
                           openMap = {this._openMap}
                           closeMap = {this._closeMap}
+                          showOfflineBtn = {this._showOfflineBtn}
                           styles={{opacity:this._statusOpacity,}}/>
       }
       // else if(this.state.taskList.length == 0 && this.state.online){

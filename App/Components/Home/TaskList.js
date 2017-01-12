@@ -50,6 +50,7 @@ export default class TaskList extends Component {
         od_restaurant:restaurant,
         od_address:address,
     })
+    this.props.showOfflineBtn()
   }
   _closeComment(){
     this.setState({
@@ -60,6 +61,7 @@ export default class TaskList extends Component {
         od_restaurant:"",
         od_address:"",
     })
+    this.props.showOfflineBtn()
   }
   _updateDataSource(){
     let bdate = realm.objectForPrimaryKey('AppUserInfo','bdate').value;

@@ -301,7 +301,7 @@ class Login extends Component {
                 </View>
                 <View style={{position:'absolute',bottom:5,width:width,alignItems:'center'}}>
                   <Text allowFontScaling={false} style={{marginBottom:5}}>
-                    v1.1.3
+                    v1.1.4
                   </Text>
                   <Text allowFontScaling={false} style={{fontSize:11}}>
                     Chanmao Inc. All Copyrights Reserved
