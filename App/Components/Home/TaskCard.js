@@ -17,15 +17,9 @@ const {height,width} = Dimensions.get('window');
 class TaskCard extends Component {
     constructor() {
       super()
-    }
-    shouldComponentUpdate(nextProps, nextState){
-      if(this.props.status != nextProps.status){
-        return true
-      }else{
-        return false
-      }
 
     }
+
     _renderTask(){
       if(this.props.status == 10 ||this.props.status == 20 ){
         return this._renderPickup()
@@ -40,16 +34,27 @@ class TaskCard extends Component {
     _renderComment(){
       if(this.props.order.comment!=''){
         return(
-          <Text allowFontScaling={false} style={{color:'#485465',fontSize:13,fontWeight:'500',marginTop:height*0.0136}}>
-            Comment: {this.props.order.comment}
-          </Text>
+            <TouchableOpacity
+              onPress={this.props.openComment.bind(null,this.props.oid,
+                                                        this.props.status,
+                                                        this.props.order,
+                                                        this.props.restaurant,
+                                                        this.props.address)}>
+              <Text ref={'comment'}
+                    allowFontScaling={false}
+                    style={{color:'#485465',fontSize:13,fontWeight:'500',marginTop:height*0.0136}}
+                    numberOfLines={2}>
+                Comment: {this.props.order.comment}
+              </Text>
+            </TouchableOpacity>
+
         )
       }
     }
     _renderPickup(){
       return(
         <View style={{width:width*0.965,
-                      minHeight:width*0.965*0.5,
+                      height:width*0.965*0.6,
                       backgroundColor:'#ffffff',
                       marginTop:height*0.0135,
                       alignSelf:'center',
@@ -62,7 +67,7 @@ class TaskCard extends Component {
                         paddingTop:height*0.0136,
                         paddingLeft:width*0.0386,
                         paddingRight:width*0.0386,
-                        paddingBottom:height*0.0254,
+                        paddingBottom:height*0.0136,
 
                       }}>
             <View style={{flexDirection:'row'}}>
@@ -126,16 +131,19 @@ class TaskCard extends Component {
               User: {this.props.address.unit}{this.props.address.addr}
             </Text>
             {this._renderComment()}
-            <TouchableOpacity onPress={this.props.orderChange.bind(null,this.props.oid,'P','30')}>
-              <Image
-                  style={{height:height*0.04,
-                          width:height*0.04*3.5974,
-                          alignSelf:'center',
-                          marginTop:10,
-                        }}
-                  source={require('../../Image/pick_up.png')}
-                />
-            </TouchableOpacity>
+            <View style={{justifyContent: 'flex-end',flex:1,}}>
+              <TouchableOpacity onPress={this.props.orderChange.bind(null,this.props.oid,'P','30')}>
+                <Image
+                    style={{height:height*0.04,
+                            width:height*0.04*3.5974,
+                            alignSelf:'center',
+                            marginBottom:0,
+                          }}
+                    source={require('../../Image/pick_up.png')}
+                  />
+              </TouchableOpacity>
+            </View>
+
           </View>
         </View>
       )
@@ -143,7 +151,7 @@ class TaskCard extends Component {
     _renderDelivering(){
       return(
         <View style={{width:width*0.965,
-                      minHeight:width*0.965*0.5,
+                      height:width*0.965*0.6,
                       backgroundColor:'#ffffff',
                       marginTop:height*0.0135,
                       alignSelf:'center',
@@ -156,14 +164,14 @@ class TaskCard extends Component {
                         paddingTop:height*0.0136,
                         paddingLeft:width*0.0386,
                         paddingRight:width*0.0386,
-                        paddingBottom:height*0.0254,
+                        paddingBottom:height*0.0136,
 
                       }}>
             <View style={{flexDirection:'row'}}>
               <View style={{width:width*0.7,paddingRight:5}}>
 
                   <View style={{flexDirection:'row'}}>
-                    <Text allowFontScaling={false} style={{fontSize:13,fontWeight:'800'}}>
+                    <Text allowFontScaling={false} style={{fontSize:15,fontWeight:'800'}}>
                       {this.props.oid}｜Delivering
                     </Text>
                     <Text allowFontScaling={false} style={{fontSize:11,marginTop:4,marginLeft:6,color:'#485465'}}>
@@ -226,17 +234,19 @@ class TaskCard extends Component {
 
             </View>
             {this._renderComment()}
+            <View style={{justifyContent: 'flex-end',flex:1,}}>
+              <TouchableOpacity onPress={this.props.orderChange.bind(null,this.props.oid,'D','40')}>
+                <Image
+                    style={{height:height*0.04,
+                            width:height*0.04*3.5974,
+                            alignSelf:'center',
+                            marginBottom:0,
+                          }}
+                    source={require('../../Image/delivered.png')}
+                  />
+              </TouchableOpacity>
+            </View>
 
-            <TouchableOpacity onPress={this.props.orderChange.bind(null,this.props.oid,'D','40')}>
-              <Image
-                  style={{height:height*0.04,
-                          width:height*0.04*3.5974,
-                          alignSelf:'center',
-                          marginTop:10,
-                        }}
-                  source={require('../../Image/delivered.png')}
-                />
-            </TouchableOpacity>
 
           </View>
         </View>
@@ -245,7 +255,7 @@ class TaskCard extends Component {
     _renderFinish(){
       return(
         <View style={{width:width*0.965,
-                      minHeight:width*0.965*0.3,
+                      height:width*0.965*0.6,
                       backgroundColor:'#ffffff',
                       marginTop:height*0.0135,
                       alignSelf:'center',
@@ -265,7 +275,7 @@ class TaskCard extends Component {
               <View style={{width:width*0.7,paddingRight:5}}>
 
                   <View style={{flexDirection:'row'}}>
-                    <Text allowFontScaling={false} style={{fontSize:13,fontWeight:'800'}}>
+                    <Text allowFontScaling={false} style={{fontSize:15,fontWeight:'800'}}>
                       {this.props.oid}｜Finish
                     </Text>
                     <Text allowFontScaling={false} style={{fontSize:11,marginTop:4,marginLeft:6,color:'#485465'}}>
@@ -335,7 +345,7 @@ class TaskCard extends Component {
     _renderCancel(){
       return(
         <View style={{width:width*0.965,
-                      minHeight:height*0.18,
+                      height:width*0.965*0.6,
                       backgroundColor:'#ffffff',
                       marginTop:height*0.0135,
                       alignSelf:'center',
@@ -411,7 +421,6 @@ class TaskCard extends Component {
       )
     }
     render() {
-      console.log('render card')
       return (
         <View>
           {this._renderTask()}

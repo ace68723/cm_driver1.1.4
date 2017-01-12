@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import TaskCard from './TaskCard';
+import TaskDetail from './TaskDetail';
 
 var reverse = require('lodash.reverse');
 const {height,width} = Dimensions.get('window');
@@ -25,9 +26,12 @@ export default class TaskList extends Component {
     this.state={
       data:[],
       dataSource: this.ds.cloneWithRows([]),
+      showTaskDetail:false,
     }
     this._renderTaskItem = this._renderTaskItem.bind(this);
     this._updateDataSource = this._updateDataSource.bind(this);
+    this._openComment = this._openComment.bind(this);
+    this._closeComment = this._closeComment.bind(this);
   }
   componentDidMount(){
     realm.addListener('change', () => {
@@ -37,6 +41,26 @@ export default class TaskList extends Component {
   componentWillUnmount(){
     realm.removeAllListeners();
   }
+  _openComment(oid,status,order,restaurant,address){
+    this.setState({
+        showTaskDetail:true,
+        od_oid:oid,
+        od_status:status,
+        od_order:order,
+        od_restaurant:restaurant,
+        od_address:address,
+    })
+  }
+  _closeComment(){
+    this.setState({
+        showTaskDetail:false,
+        od_oid:"",
+        od_status:"",
+        od_order:"",
+        od_restaurant:"",
+        od_address:"",
+    })
+  }
   _updateDataSource(){
     let bdate = realm.objectForPrimaryKey('AppUserInfo','bdate').value;
     const bdateFilter = 'bdate = "'+bdate+'"';
@@ -44,6 +68,7 @@ export default class TaskList extends Component {
     this.setState({
       dataSource:this.state.dataSource.cloneWithRows(this.orders),
     })
+
   }
   _renderTaskItem (item,index)  {
 
@@ -55,7 +80,8 @@ export default class TaskList extends Component {
                 address={item.address}
                 orderChange={this.props.orderChange}
                 openMap = {this.props.openMap}
-                closeMap = {this.props.closeMap}/>
+                closeMap = {this.props.closeMap}
+                openComment = {this._openComment}/>
     )
   }
   _renderTaskList(){
@@ -77,11 +103,26 @@ export default class TaskList extends Component {
     }
   }
   // <View style={{flex:1,height:1,backgroundColor:'#d1d2d4'}}/>
-
+  _renderTaskDetail(){
+    if(this.state.showTaskDetail){
+      return(
+        <TaskDetail close = {this._closeComment}
+                    oid={this.state.od_oid}
+                    status={this.state.od_order.status}
+                    order={this.state.od_order}
+                    restaurant={this.state.od_restaurant}
+                    address={this.state.od_address}
+                    orderChange={this.props.orderChange}
+                    openMap = {this.props.openMap}
+                    closeMap = {this.props.closeMap}/>
+      )
+    }
+  }
   render() {
     return (
-      <Animated.View   style={[this.props.styles,{marginTop:67}]}>
+      <Animated.View   style={[this.props.styles,{marginTop:67,flex:1}]}>
         {this._renderTaskList()}
+        {this._renderTaskDetail()}
       </Animated.View>
     );
   }

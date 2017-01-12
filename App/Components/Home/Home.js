@@ -146,6 +146,7 @@ class Home extends Component {
         break;
 
         case 'ord_in':
+          console.log('ord_in')
           this._newOrderNotification('#'+data.order.oid +' New Order');
           MDWamp.call("task_refresh",[this.token]);
         break;
@@ -169,6 +170,7 @@ class Home extends Component {
 
         case 'task_refresh':
         console.log(data.orders)
+        realm.write(() => {
           forEach(data.orders,(data,key)=>{
             const order = Object.assign({},data.order);
             const restaurant = Object.assign({},data.rr);
@@ -179,14 +181,13 @@ class Home extends Component {
             const oid = data.oid;
             const bdate = data.bdate;
             const orderData = Object.assign({},{oid,bdate,order,restaurant,address});
-            // console.log(orderData)
-            setTimeout(function () {
-              realm.write(() => {
-                 realm.create('Orders',orderData, true );
-              });
-            }, 2000);
+
+            realm.create('Orders',orderData, true );
+
+
 
           })
+        });
 
 
         break;
@@ -214,6 +215,7 @@ class Home extends Component {
                     this.state.location.coords.longitude])
     }
     _newOrderNotification(message){
+      console.log('_newOrderNotification')
       if(!this.state.showNotification){
         this.setState({
           showNotification:true,
@@ -225,9 +227,9 @@ class Home extends Component {
       }
     }
     _cancelNotification(){
-      // const interval = this.notificationAlert
+      const interval = this.notificationAlert
       clearInterval(notificationAlert);
-      // FlashLight.close();
+      FlashLight.close();
       this.setState({showNotification:false})
     }
 

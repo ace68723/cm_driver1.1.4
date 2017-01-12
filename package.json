@@ -15,6 +15,7 @@
     "react-native-device-info": "^0.9.7",
     "react-native-location": "^0.27.0",
     "react-native-maps": "^0.12.2",
+    "react-native-popover": "^0.2.0",
     "realm": "^0.14.1"
   },
   "devDependencies": {
